@@ -1,0 +1,33 @@
+[[pages]]
+path = "index.py"
+name = "Home"
+icon = "🏠"
+
+[[pages]]
+name = "Cool apps"
+icon = ":pig:"
+is_section = true
+
+[[pages]]
+path = "pages/app.py"
+name = "Application"
+icon = ":material/history:"
+
+[[pages]]
+path = "pages/contact.py"
+name = "Contact"
+icon = "📖"
+
+[[pages]]
+name = "Other apps"
+icon = ":horse:"
+is_section = true
+
+[[pages]]
+path = "pages/KPI.py"
+
+[[pages]]
+path = "pages/todo.py"
+name = "Todo"
+icon = "🧰"
+url_path = "a_very_long_page_title"
