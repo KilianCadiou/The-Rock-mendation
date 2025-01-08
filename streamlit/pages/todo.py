@@ -8,12 +8,28 @@ def local_css(styles):
 
 local_css("styles.css")
 
+
 st.html(
+    "<h2>A faire</h2>"
    " <ul>"
-        "<li>Structure page App ⌛</li>"
-        "<li>Créer logo du service ⌛</li>"
+        "<li>Structure page App ✅</li>"
+        "<li>Créer logo du service ✅</li>"
         "<li>Bakground App ✅</li>"
         "<li>Menu gauche + emoji ✅</li>"
         "<li>Vérifier les typos ✅</li>"
+        "<li>Page About ✅</li>"
+        "<li>Photo team ✅</li>"
+        "<li>Reload graph express ⌛</li>"
+
+    "</ul>"
+)
+
+
+st.html(
+    "<h2>Piste d'évolution</h2>"
+    " <ul>"
+        "<li>Possibilité de mettre en favoris ses films à voir</li>"
+        "<li>Ajout de différents filtres de recherche</li>"
+        "<li>Ajout d'une page contact</li>"
     "</ul>"
 )
