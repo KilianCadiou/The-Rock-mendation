@@ -23,7 +23,7 @@ st.html(
 st.html(
 
     "<ol class='liste-objectifs'>"
-        "<li>Réaliser une <a href='https://google.fr' target='_blank'>étude de marché</a> sur la consommation de cinéma dans la région.</li>"
+        "<li>Réaliser une <a href='https://docs.google.com/document/d/11CvkiZSQv0-sk87al2F1MfSFFesAjdreX2VEsOvnPac/edit?tab=t.0' target='_blank'>étude de marché</a> sur la consommation de cinéma dans la région.</li>"
         "<li>Mettre en avant certains <a href='KPI'>chiffres clés (KPI)</a> comme les acteurs les plus présents, l'âge moyen des acteurs...</li>"
         "<li>Créer une <a href='app'>Application</a> de recommandation de film en fonction des appréciations du spectateur.</li>"
     "</ol>"
