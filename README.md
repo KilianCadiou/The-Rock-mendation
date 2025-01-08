@@ -14,4 +14,5 @@ Nous sommes une équipe de passionnés de données et de cinéma, réunis par un
 
 ## 🗂️ Fichiers
 
-Accéder au drive : [https://drive.google.com/drive/folders/1NbECKBwdzx-icLxxpvwAE6zxTDwcWnOI](https://drive.google.com/drive/folders/1NbECKBwdzx-icLxxpvwAE6zxTDwcWnOI)
+- Accéder au drive : [https://drive.google.com/drive/folders/1NbECKBwdzx-icLxxpvwAE6zxTDwcWnOI](https://drive.google.com/drive/folders/1NbECKBwdzx-icLxxpvwAE6zxTDwcWnOI)
+- Notre mission : [https://wildcodeschool.github.io/data-training-resources/projet/projet-2/#missions-et-livrables-attendus](https://wildcodeschool.github.io/data-training-resources/projet/projet-2/#missions-et-livrables-attendus)
