@@ -14,15 +14,21 @@ h1,
 h2,
 h3,
 h4 {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif !important;
     /* font-family: "Source Code Pro", sans-serif; */
     color: #fff;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 h1 {
     margin: 0;
     font-size: 42px;
     line-height: 34px;
+}
+
+h1#a-propos {
+    margin: 0 0 30px 0;
 }
 
 h1 span {
@@ -87,9 +93,9 @@ p {
     margin-bottom: 40px;
 }
 
-.stHorizontalBlock {
+/* .stHorizontalBlock {
     align-items: center;
-}
+} */
 
 .stHorizontalBlock div {
     margin: 0 auto;
@@ -113,10 +119,20 @@ p {
     background: #220e64;
 }
 
+.stLogo {
+    margin: 0;
+    width: 100%;
+    height: 250px !important;
+}
+
 /* PAGE APPLICATION */
 
 .titre_film {
     padding-bottom: 0 !important;
+}
+
+.note {
+    font-size: 18px !important;
 }
 
 .caract_film {
@@ -124,4 +140,31 @@ p {
     font-size: 14px;
     font-weight: 100;
     padding-left: 42px;
+}
+
+
+
+
+.film_reco,
+.film_reco h4 {
+    font-size: 14px;
+    margin: 5px 0;
+    padding: 0;
+}
+
+.film_reco h3 {
+    font-size: 18px;
+    margin-bottom: 10px !important;
+    padding-bottom: 0;
+}
+
+.film_reco img {
+    margin-bottom: 20px;
+    width: 90%;
+    transition: transform .2s;
+    /* Animation */
+}
+
+.film_reco img:hover {
+    transform: scale(1.1);
 }

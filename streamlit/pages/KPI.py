@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly.express as px
+px.defaults.template = "plotly_white"
 
 # Import CSS --------
 
@@ -13,19 +15,17 @@ local_css("styles.css")
 
 # --------------------
 
-st.html("<h2>📊 Quelques chiffres clés</h2>")
+st.html("<h1>📊 Quelques chiffres clés</h1>")
 
 
 # KPI 1
 
 
-st.markdown("""
+st.html(
 
-    ## 📊 KPI 1 : Nombre de films par acteur/actrice
-            
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            
-        """)
+    "<h2>KPI 1 : Nombre de films par acteur/actrice</h2>"
+                        
+)
 
 # Lecture du fichier
 df = pd.read_csv('../kpi_extracts/KPI1Extract.csv.gz')
@@ -48,16 +48,12 @@ plt.legend()
 # plt.tight_layout()
 st.pyplot(fig)
 
-
-
 # KPI2
 
-st.markdown("""
+st.html("""
 
-    ## 📊 KPI 2 : Durée des films par années
-            
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            
+    <h2>KPI 2 : Durée des films par années</h2>
+                        
             """)
 
 # Lecture du fichier
@@ -82,12 +78,10 @@ st.pyplot(fig2)
 
 # KPI 3
 
-st.markdown("""
+st.html("""
 
-    ## 📊 KPI 3 : Nombres d'acteur en fonction de leurs âges au moment du film (ou série)
-            
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            
+    <h2>KPI 3 : Nombres d'acteur en fonction de leurs âges au moment du film (ou série)</h2>
+                        
             """)
 
 # Lecture des fichiers
@@ -122,12 +116,10 @@ st.pyplot(fig3)
 
 # KPI 4
 
-st.markdown("""
+st.html("""
 
-    ## 📊 KPI 4 : Âge des acteurs au moment des tournages
-            
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            
+    <h2>KPI 4 : Âge des acteurs au moment des tournages</h2>
+                        
             """)
 
 df = pd.read_csv('../kpi_extracts/KPI4Bis.csv.gz',)
@@ -158,12 +150,10 @@ st.pyplot(fig4)
 
 # KPI 5
 
-st.markdown("""
+st.html("""
 
-    ## 📊 KPI 5 : Budget, période et genre des films les mieux notés
-            
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            
+    <h2>KPI 5 : Budget, période et genre des films les mieux notés</h2>
+                        
             """)
 
 # Lecture des fichiers
@@ -172,9 +162,9 @@ Decennie = pd.read_csv('../kpi_extracts/KPI5Decennie.csv.gz',)
 Genre = pd.read_csv('../kpi_extracts/KPI5Genre.csv.gz',)
 
 
-st.markdown("""
+st.html("""
 
-    ### Budget des meilleurs films
+    <h3>Budget des meilleurs films</h3>
             
             """)
 
@@ -186,9 +176,9 @@ st.pyplot(fig5a)
 
 
 
-st.markdown("""
+st.html("""
 
-    ### Les périodes des films les mieux notés
+    <h3>Les périodes des films les mieux notés</h3>
             
             """)
 
@@ -208,9 +198,9 @@ plt.pie(df['Apparition'], labels=df['decennie'], autopct='%1.1f%%', startangle=9
 st.pyplot(fig5b)
 
 
-st.markdown("""
+st.html("""
 
-    ### Les genres des films les mieux notés
+    <h3>Les genres des films les mieux notés</h3>
             
             """)
 

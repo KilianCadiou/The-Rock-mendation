@@ -31,10 +31,6 @@ import pickle
 # FONCTIONS
 
 
-
-import pandas as pd
-import numpy as np
-
 def encodage_X(X, type, poids):
     from sklearn.preprocessing import StandardScaler
     index = X.index
@@ -146,7 +142,7 @@ def pokemons_similaires(X, film_id, model, SN, poids, X_encoded, df):
 
 # Import des données
 
-df = pd.read_csv('BD/P2_G5_films.csv.gz', compression = 'gzip')
+df = pd.read_csv('../BD/P2_G5_films.csv.gz', compression = 'gzip')
 
 # CHOIX DES CARACTERISTIQUES
 
@@ -214,14 +210,14 @@ def local_css(styles):
     with open(styles) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-local_css("streamlit/styles.css")
+local_css("./styles.css")
 
 # --------------
 
 
-st.html("<h1>The Rock'mendation</h1>")
+st.html("<h1>What the Rock'mendation?</h1>")
 
-st.html("<p>Bienvenu sur notre service de recommandation de films. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>")
+st.html("<p>Bienvenu sur notre service de recommandation de films. Choisissez un film et laissez-vous guider...</p>")
 
 
 # Sélectionner le film
@@ -248,15 +244,114 @@ if choix_film:
         index=None,
         placeholder="Select")
     
+    # Fonction WebScrapping
+
+    def info_films(id):
+        url_base = 'https://www.imdb.com'
+        url_base_title = 'https://www.imdb.com/fr/title/'
+        url_finale_title = f'{url_base_title}{id}'
+
+        if id == None:
+            return 
+
+        #TRAILER
+
+        html_title = requests.get(url_finale_title, headers={'User-Agent': navigator})
+        html_title2 = html_title.content
+        soup_title = BeautifulSoup(html_title2, 'html.parser')
+
+        for balise_parent in soup_title.find_all('div', class_='ipc-page-content-container ipc-page-content-container--center'):
+            for element in balise_parent.find_all('a', class_='ipc-lockup-overlay ipc-focusable'):
+                try:
+                    if 'video' in element['href']:
+                        trailer = element['href']
+                    break
+                except:
+                    pass
+
+        lien_trailer = f'{url_base}{trailer}'
+
+        #AFFICHE
+
+        html_affiche = requests.get(url_finale_title, headers={'User-Agent': navigator})
+        html_affiche2 = html_affiche.content
+        soup_affiche = BeautifulSoup(html_affiche2, 'html.parser')
+        affiche = ''
+
+        for balise_parent in soup_affiche.find_all('div', class_='ipc-page-content-container ipc-page-content-container--center'):
+            for element in balise_parent.find_all('img', class_='ipc-image'):
+                affiche += f", {element['src']}"
+
+        affiche = affiche.split(', ')
+
+        if "" in affiche:
+            affiche.remove("")
+
+        lien_affiche = affiche[0]
+
+        #ACTEURS
+
+        html_acteurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
+        html_acteurs2 = html_acteurs.content
+        soup_acteurs = BeautifulSoup(html_acteurs2, 'html.parser')
+        liste_acteurs = []
+        for balise_parent in soup_acteurs.find_all('div', class_='sc-cd7dc4b7-7 vCane'):
+            for element in balise_parent.find_all('a', class_='sc-cd7dc4b7-1 kVdWAO'):
+                liste_acteurs.append(element.get_text().strip())
+
+        if len(liste_acteurs) > 4:
+            liste_acteurs = liste_acteurs[:4]
+
+        #PHOTOS ACTEURS
+
+        html_acteurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
+        html_acteurs2 = html_acteurs.content
+        soup_acteurs = BeautifulSoup(html_acteurs2, 'html.parser')
+        dico_photos = {}
+        dico_photos_final = {}
+
+        for balise_parent in soup_acteurs.find_all('img', class_='ipc-image'):
+            dico_photos.update({balise_parent['alt'] : balise_parent['src']})
+
+        for element in dico_photos.keys():
+            if element in liste_acteurs:
+                dico_photos_final.update({element : dico_photos[element]})
+
+        #REALISATEUR
+
+        html_realisateurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
+        html_realisateurs2 = html_realisateurs.content
+        soup_realisateurs = BeautifulSoup(html_realisateurs2, 'html.parser')
+        liste_realisateurs = []
+        for balise_parent in soup_realisateurs.find_all('a', class_='ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link'):
+            liste_realisateurs.append(balise_parent.get_text().strip())
+
+        realisateur = liste_realisateurs[0]
+
+        #RESUME
+
+        html_resume = requests.get(url_finale_title, headers={'User-Agent': navigator})
+        html_resume2 = html_resume.content
+        soup_resume = BeautifulSoup(html_resume2, 'html.parser')
+
+        for balise_parent in soup_resume.find_all('span', class_='sc-3ac15c8d-1 gkeSEi'):
+            resume = balise_parent.get_text().strip()
+
+        return lien_trailer, lien_affiche, liste_acteurs, dico_photos_final, realisateur, resume
+
+
+
     # Je stock la sélection pour la similarité
     df_selection = df[df['title_out_KNN_final'] == selected_film]
 
     # Si mon film est sélectionné, j'affiche les suggestions 
     # dans le selecbox
 
+
     if selected_film:
         st.markdown("---")
         titre_film = selected_film
+        trailer, affiche, acteur, photos, realisateur, resume = info_films(str(df_selection['film_id_out_KNN'].iloc[0]) )
 
 
         html_str = f"""
@@ -266,7 +361,7 @@ if choix_film:
 
         st.markdown(html_str, unsafe_allow_html=True)
 
-        col1, col2 = st.columns(2)
+        col1, col2, col3 = st.columns(3)
 
         #On récupère l'affiche du film
         url_finale_title = f'{url_base_title}{str(df_selection['film_id_out_KNN'].iloc[0])}'
@@ -289,28 +384,24 @@ if choix_film:
         lien_affiche = affiche[0]
 
         with col1:
-            st.image(lien_affiche, use_container_width=True)
+            html_poster = f"""
+                <img class="img_poster" src="{lien_affiche}" />
+            """
+
+            st.markdown(html_poster, unsafe_allow_html=True)
+
+
+            # st.image(lien_affiche, use_container_width=True)
 
 
         with col2:
             html_vote = f"""
-                <h3>⭐ Note : {round(float(df_selection['vote_exact']), 2)}/10</h3>
+                <h3 class="note">⭐ Note : {round(float(df_selection['vote_exact']), 2)}/10</h3>
             """
             st.markdown(html_vote, unsafe_allow_html=True)
 
 
             # On récupère nos acteurs
-
-            html_acteurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
-            html_acteurs2 = html_acteurs.content
-            soup_acteurs = BeautifulSoup(html_acteurs2, 'html.parser')
-            liste_acteurs = []
-            for balise_parent in soup_affiche.find_all('div', class_='sc-cd7dc4b7-7 vCane'):
-                for element in balise_parent.find_all('a', class_='sc-cd7dc4b7-1 kVdWAO'):
-                    liste_acteurs.append(element.get_text().strip())
-
-            if len(liste_acteurs) > 4:
-                liste_acteurs = liste_acteurs[:4]
 
             st.html("<h3>🤵 Casting</h3>")
 
@@ -318,10 +409,10 @@ if choix_film:
 
             html_list_actors = f"""
                 <ul>
-                    <li>{liste_acteurs[0]}</li>
-                    <li>{liste_acteurs[1]}</li>
-                    <li>{liste_acteurs[2]}</li>
-                    <li>{liste_acteurs[3]}</li>
+                    <li>{acteur[0]}</li>
+                    <li>{acteur[1]}</li>
+                    <li>{acteur[2]}</li>
+                    <li>{acteur[3]}</li>
                 </ul>
             """
 
@@ -331,22 +422,23 @@ if choix_film:
 
         # On récupère le synopsis
 
+        with col3:
 
-        html_resume = requests.get(url_finale_title, headers={'User-Agent': navigator})
-        html_resume2 = html_resume.content
-        soup_resume = BeautifulSoup(html_resume2, 'html.parser')
+            html_resume = requests.get(url_finale_title, headers={'User-Agent': navigator})
+            html_resume2 = html_resume.content
+            soup_resume = BeautifulSoup(html_resume2, 'html.parser')
 
-        for balise_parent in soup_affiche.find_all('span', class_='sc-3ac15c8d-1 gkeSEi'):
-            resume = balise_parent.get_text().strip()
+            for balise_parent in soup_affiche.find_all('span', class_='sc-3ac15c8d-1 gkeSEi'):
+                resume = balise_parent.get_text().strip()
 
 
-        st.html("<h3>📑 Synopsis</h3>")
+            st.html("<h3>📑 Synopsis</h3>")
 
-        html_synopsis = f"""
-            <p>{resume}</p>
-        """
+            html_synopsis = f"""
+                <p>{resume}</p>
+            """
 
-        st.markdown(html_synopsis, unsafe_allow_html=True)
+            st.markdown(html_synopsis, unsafe_allow_html=True)
 
         st.markdown("---")
 
@@ -375,7 +467,7 @@ if choix_film:
 
         df_final = encodage_predict(df_a_predire, SN, poids, X_encoded)
 
-        with open('BD/mon_modele.pkl', 'rb') as f: #là vous mettez l'emplacement et le nom de votre fichier pkl
+        with open('../BD/mon_modele.pkl', 'rb') as f: #là vous mettez l'emplacement et le nom de votre fichier pkl
             model = pickle.load(f)
 
         k=5
@@ -392,7 +484,7 @@ if choix_film:
 
         caracteristiques.remove('film_id_out_KNN')
 
-        st.write(final['title_out_KNN'])
+        # st.write(final['title_out_KNN'])
 
 
         #######################
@@ -405,44 +497,87 @@ if choix_film:
         st.html("<h2>🤙 Nos Rock'mendations</h2>")
 
 
+        # col1, col2, col3, col4 = st.columns(4)
 
-        col1, col2, col3, col4, col5 = st.columns(5)
+        # for n in range(len(final)):
+        #     if n != 0:
+
+        #         f'trailer{n}', f'affiche{n}', f'acteur{n}', f'photos{n}', f'realisateur{n}', f'resume{n}' = info_films(final['film_id_out_KNN'].iloc[n])
+
+        #         with f'col{n}':
+        #             html_reco_title = f"""
+        #                 <div class="film_reco">
+        #                     <img src="{f'affiche{n}'}" />
+        #                     <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[n]}</h3>
+        #                     <h4>⭐ Note : {round(float(final['vote_exact'].iloc[n]), 2)}/10</h4>
+        #                     <p class="annee_film_reco">{int(final['year_exact'].iloc[n])}</p>
+        #                 </div>
+        #             """
+
+
+
+
+        trailer1, affiche1, acteur1, photos1, realisateur1, resume1 = info_films(str(final['film_id_out_KNN'].iloc[1]) )
+        trailer2, affiche2, acteur2, photos2, realisateur2, resume2 = info_films(str(final['film_id_out_KNN'].iloc[2]) )
+        trailer3, affiche3, acteur3, photos3, realisateur3, resume3 = info_films(str(final['film_id_out_KNN'].iloc[3]) )
+        trailer4, affiche4, acteur4, photos4, realisateur4, resume4 = info_films(str(final['film_id_out_KNN'].iloc[4]) )
+
+        # for n in range(len(final)):
+        #     f'trailer{n}', f'affiche{n}', f'acteur{n}', f'photos{n}', f'realisateur{n}', f'resume{n}' = info_films(str(final['film_id_out_KNN'].iloc[n]))
+
+        col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            st.image("img/gladiator.jpg", use_container_width=True)
+            
 
-            st.write("Titre de mon film")
-            st.write("Note : 4/5")
-            st.write("1990")
+            html_reco_title = f"""
+                <div class="film_reco">
+                    <img src="{affiche1}" />
+                    <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[1]}</h3>
+                    <h4>Note : {round(float(final['vote_exact'].iloc[1]), 2)}/10</h4>
+                    <p class="annee_film_reco">{int(final['year_exact'].iloc[1])}</p>
+                </div>
+            """
+
+            st.markdown(html_reco_title, unsafe_allow_html=True)
+
 
         with col2:
-            st.image("img/gladiator.jpg", use_container_width=True)
+            html_reco_title = f"""
+                <div class="film_reco">
+                    <img src="{affiche2}" />
+                    <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[2]}</h3>
+                    <h4>Note : {round(float(final['vote_exact'].iloc[2]), 2)}/10</h4>
+                    <p class="annee_film_reco">{int(final['year_exact'].iloc[2])}</p>
+                </div>
+            """
 
-            st.write("Titre de mon film")
-            st.write("Note : 4/5")
-            st.write("1990")
+            st.markdown(html_reco_title, unsafe_allow_html=True)
 
         with col3:
-            st.image("img/gladiator.jpg", use_container_width=True)
+            html_reco_title = f"""
+                <div class="film_reco">
+                    <img src="{affiche3}" />
+                    <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[3]}</h3>
+                    <h4>Note : {round(float(final['vote_exact'].iloc[4]), 2)}/10</h4>
+                    <p class="annee_film_reco">{int(final['year_exact'].iloc[3])}</p>
+                </div>
+            """
 
-            st.write("Titre de mon film")
-            st.write("Note : 4/5")
-            st.write("1990")
+            st.markdown(html_reco_title, unsafe_allow_html=True)
 
         with col4:
-            st.image("img/gladiator.jpg", use_container_width=True)
+            html_reco_title = f"""
+                <div class="film_reco">
+                    <img src="{affiche4}" />
+                    <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[3]}</h3>
+                    <h4>Note : {round(float(final['vote_exact'].iloc[4]), 2)}/10</h4>
+                    <p class="annee_film_reco">{int(final['year_exact'].iloc[4])}</p>
+                </div>
+            """
 
-            st.write("Titre de mon film")
-            st.write("Note : 4/5")
-            st.write("1990")
+            st.markdown(html_reco_title, unsafe_allow_html=True)
 
-        with col5:
-            st.image("img/gladiator.jpg", use_container_width=True)
-
-            st.write("Titre de mon film")
-            st.write("Note : 4/5")
-            st.write("1990")
-            
 
 
 
