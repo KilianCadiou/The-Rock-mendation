@@ -20,6 +20,7 @@ st.html(
         "<li>Page About ✅</li>"
         "<li>Photo team ✅</li>"
         "<li>Reload graph express ⌛</li>"
+        "<li>st.cache_ressources ⌛</li>"
 
     "</ul>"
 )

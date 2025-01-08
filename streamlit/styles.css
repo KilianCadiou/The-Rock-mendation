@@ -125,6 +125,10 @@ p {
     height: 250px !important;
 }
 
+[data-testid="stSidebarCollapsedControl"] img {
+    display: none;
+}
+
 /* PAGE APPLICATION */
 
 .titre_film {
