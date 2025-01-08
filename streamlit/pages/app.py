@@ -559,7 +559,7 @@ if choix_film:
                 <div class="film_reco">
                     <img src="{affiche3}" />
                     <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[3]}</h3>
-                    <h4>Note : {round(float(final['vote_exact'].iloc[4]), 2)}/10</h4>
+                    <h4>Note : {round(float(final['vote_exact'].iloc[3]), 2)}/10</h4>
                     <p class="annee_film_reco">{int(final['year_exact'].iloc[3])}</p>
                 </div>
             """
@@ -570,7 +570,7 @@ if choix_film:
             html_reco_title = f"""
                 <div class="film_reco">
                     <img src="{affiche4}" />
-                    <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[3]}</h3>
+                    <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[4]}</h3>
                     <h4>Note : {round(float(final['vote_exact'].iloc[4]), 2)}/10</h4>
                     <p class="annee_film_reco">{int(final['year_exact'].iloc[4])}</p>
                 </div>

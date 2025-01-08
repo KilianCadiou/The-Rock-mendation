@@ -8,4 +8,4 @@ def local_css(styles):
 
 local_css("styles.css")
 
-st.title("Contact")
+st.html("<h2>Contact</h2>")
