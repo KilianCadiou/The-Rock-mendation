@@ -1,5 +1,4 @@
 import streamlit as st
-import base64
 from st_pages import get_nav_from_toml
 
 nav = get_nav_from_toml(
