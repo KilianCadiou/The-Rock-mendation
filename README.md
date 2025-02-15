@@ -1,12 +1,18 @@
-![bannière]([https://i.ibb.co/0htqWRt/ban-github.jpg](https://raw.githubusercontent.com/KilianCadiou/Va-Te-Faire-Foot/main/STREAMLIT/img/file-AfJoGfAn6WiPywEs5Y4Mb2.png))
+![bannière](https://i.ibb.co/0htqWRt/ban-github.jpg)
 
-# 🤘 Va te faire foot !
+# 🤘 The Rock'mendation
 
-Nous sommes une équipe de passionnés de données et de football, réunis par un projet ambitieux : concevoir un système de recommandation de joueurs de football, comme si nous étions recruteurs pour un club. Combinant nos compétences en analyse de données, en machine learning et en visualisation, nous avons travaillé main dans la main pour créer une solution complète et simple de prise en main. Ce projet est le fruit de notre collaboration, de nos échanges d’idées et de notre envie commune de transformer les données en une expérience accessible et personnalisée.
+Nous sommes une équipe de passionnés de données et de cinéma, réunis par un projet ambitieux : concevoir un système de recommandation de films dédié à la Creuse. Combinant nos compétences en analyse de données, en machine learning et en visualisation, nous avons travaillé main dans la main pour créer une solution qui inspire et divertit. Chacun de nous apporte une expertise unique, qu’il s’agisse de programmation, de gestion de projet ou encore de créativité dans l’approche des problématiques. Ce projet est le fruit de notre collaboration, de nos échanges d’idées et de notre envie commune de transformer les données en une expérience accessible et personnalisée.
 
 
 ## 👨🏻‍💼 Team 
 
 - [@Kilian](https://github.com/KilianCadiou)
 - [@Malo](https://github.com/MaloBang)
-- [@Matthieu](https://github.com/MatthieuMARTIN3)
+- [@Cédric](https://github.com/DriixData)
+- [@Romain](https://github.com/LegacyLord44)
+
+## 🗂️ Fichiers
+
+- Accéder au drive : [https://drive.google.com/drive/folders/1NbECKBwdzx-icLxxpvwAE6zxTDwcWnOI](https://drive.google.com/drive/folders/1NbECKBwdzx-icLxxpvwAE6zxTDwcWnOI)
+- Notre mission : [https://wildcodeschool.github.io/data-training-resources/projet/projet-2/#missions-et-livrables-attendus](https://wildcodeschool.github.io/data-training-resources/projet/projet-2/#missions-et-livrables-attendus)
