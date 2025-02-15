@@ -7,7 +7,7 @@ def local_css(styles):
     with open(styles) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-local_css("styles.css")
+local_css("streamlit/styles.css")
 
 st.html("<h1>The Rock'mendation <br> <span>Le projet</span></h1>")
 st.markdown("---")

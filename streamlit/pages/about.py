@@ -6,7 +6,7 @@ def local_css(styles):
     with open(styles) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-local_css("styles.css")
+local_css("streamlit/styles.css")
 
 
 st.html("<h1 id='a-propos'>🙋‍♂️ A propos</h1>")
@@ -20,7 +20,7 @@ st.html("<h2>👨🏻‍💼 La team</h2>")
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.image("img/avatar-malo.png")
+    st.image("streamlit/img/avatar-malo.png")
     st.html(    
         "<h4>Malo L.</h4>"
         "<p><a href='https://www.linkedin.com/in/malo-le-pors-5373a8273/' target='_blank'>LinkedIn</a></p>"
@@ -28,7 +28,7 @@ with col1:
     )
 
 with col2:
-    st.image("img/avatar-kilian.png")
+    st.image("streamlit/img/avatar-kilian.png")
     st.html(    
         "<h4>Kilian C.</h4>"
         "<p><a href='https://www.linkedin.com/in/kiliancadiou/' target='_blank'>LinkedIn</a></p>"
@@ -36,7 +36,7 @@ with col2:
     )
 
 with col3:
-    st.image("img/avatar-romain.png")
+    st.image("streamlit/img/avatar-romain.png")
     st.html(    
         "<h4>Romain F.</h4>"
         "<p><a href='https://www.linkedin.com/in/romain-foucault-01b11a15a/' target='_blank'>LinkedIn</a></p>"
@@ -44,7 +44,7 @@ with col3:
     )
 
 with col4:
-    st.image("img/avatar-cedric.png")
+    st.image("streamlit/img/avatar-cedric.png")
     st.html(    
         "<h4>Cédric R.</h4>"
         "<p><a href='https://www.linkedin.com/in/c3dr1c/' target='_blank'>LinkedIn</a></p>"

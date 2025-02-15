@@ -1,12 +1,12 @@
 import streamlit as st
 import base64
-from st_pages import add_page_title, get_nav_from_toml
+from st_pages import get_nav_from_toml
 
 nav = get_nav_from_toml(
-    ".streamlit/pages.toml"
+    "streamlit/.streamlit/pages.toml"
 )
 
-st.logo("img/logo.png")
+st.logo("streamlit/img/logo.png")
 
 
 

@@ -142,7 +142,7 @@ def pokemons_similaires(X, film_id, model, SN, poids, X_encoded, df):
 
 # Import des données
 
-df = pd.read_csv('../BD/P2_G5_films.csv.gz', compression = 'gzip')
+df = pd.read_csv('BD/P2_G5_films.csv.gz', compression = 'gzip')
 
 # CHOIX DES CARACTERISTIQUES
 
@@ -210,7 +210,7 @@ def local_css(styles):
     with open(styles) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-local_css("./styles.css")
+local_css("streamlit/styles.css")
 
 # --------------
 
