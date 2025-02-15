@@ -142,9 +142,7 @@ def pokemons_similaires(X, film_id, model, SN, poids, X_encoded, df):
 
 # Import des données
 
-import os
-filepath = os.path.abspath("BD/P2_G5_films.csv.gz")
-df = pd.read_csv(filepath, compression='gzip')
+df = pd.read_csv("./BD/P2_G5_films.csv.gz", compression='gzip')
 
 # CHOIX DES CARACTERISTIQUES
 
