@@ -11,7 +11,7 @@ def local_css(styles):
     with open(styles) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-local_css("styles.css")
+local_css("streamlit/styles.css")
 
 # --------------------
 
@@ -28,7 +28,7 @@ st.html(
 )
 
 # Lecture du fichier
-df = pd.read_csv('../kpi_extracts/KPI1Extract.csv.gz')
+df = pd.read_csv('kpi_extracts/KPI1Extract.csv.gz')
 df = df.dropna(subset=['Acteur/Actrice'])
 df['Acteur/Actrice'] = df['Acteur/Actrice'].astype(str)
 
@@ -57,7 +57,7 @@ st.html("""
             """)
 
 # Lecture du fichier
-df = pd.read_csv('../kpi_extracts/KPI2Extract.csv.gz')
+df = pd.read_csv('kpi_extracts/KPI2Extract.csv.gz')
 
 # Moyenne des durées de films
 df_test = df.groupby('year_exact')['runtime_exact'].mean()
@@ -86,9 +86,9 @@ st.html("""
 
 # Lecture des fichiers
 
-df = pd.read_csv('../kpi_extracts/KPI3ActeurTV.csv.gz',)
-df_duo = pd.read_csv('../kpi_extracts/KPI3Duo.csv.gz',)
-df_film = pd.read_csv('../kpi_extracts/KPI3Film.csv.gz')
+df = pd.read_csv('kpi_extracts/KPI3ActeurTV.csv.gz',)
+df_duo = pd.read_csv('kpi_extracts/KPI3Duo.csv.gz',)
+df_film = pd.read_csv('kpi_extracts/KPI3Film.csv.gz')
 
 # Calcul des âges
 df_total = df.groupby('birthYear')['nconst'].count()
@@ -122,7 +122,7 @@ st.html("""
                         
             """)
 
-df = pd.read_csv('../kpi_extracts/KPI4Bis.csv.gz',)
+df = pd.read_csv('kpi_extracts/KPI4Bis.csv.gz',)
 
 
 test_film = df.groupby('age')['nconst'].count()
@@ -157,9 +157,9 @@ st.html("""
             """)
 
 # Lecture des fichiers
-budget = pd.read_csv('../kpi_extracts/KPI5Budget.csv.gz',)
-Decennie = pd.read_csv('../kpi_extracts/KPI5Decennie.csv.gz',)
-Genre = pd.read_csv('../kpi_extracts/KPI5Genre.csv.gz',)
+budget = pd.read_csv('kpi_extracts/KPI5Budget.csv.gz',)
+Decennie = pd.read_csv('kpi_extracts/KPI5Decennie.csv.gz',)
+Genre = pd.read_csv('kpi_extracts/KPI5Genre.csv.gz',)
 
 
 st.html("""
