@@ -14,11 +14,6 @@ name = "KPI"
 icon = "📊"
 
 [[pages]]
-path = "pages/about.py"
-name = "About"
-icon = "🙋‍♂️"
-
-[[pages]]
 path = "pages/contact.py"
 name = "Contact"
 icon = "💌"
