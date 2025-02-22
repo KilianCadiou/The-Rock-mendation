@@ -7,8 +7,3 @@ icon = "🏠"
 path = "pages/app.py"
 name = "Application"
 icon = "🍿"
-
-[[pages]]
-path = "pages/KPI.py"
-name = "KPI"
-icon = "📊"
