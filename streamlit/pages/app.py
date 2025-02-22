@@ -362,7 +362,6 @@ if choix_film:
     # Je stock la sélection pour la similarité
     df_selection = resultat[resultat['title_out_KNN'] == selected_film]
 
-    st.dataframe(resultat)
     # Si mon film est sélectionné, j'affiche les suggestions 
     # dans le selecbox
 
