@@ -37,13 +37,13 @@ st.html(
 col1, col2, col3, col4 = st.columns(4)
 
 with col1: 
-    st.image("img/python.png")
+    st.image("streamlit/img/Python.png")
 
 with col2:
-    st.image("img/pandas_white.png")
+    st.image("streamlit/img/pandas_white.png")
 
 with col3:
-    st.image("img/scikit-learn.png")
+    st.image("streamlit/img/scikit-learn.png")
 
 with col4:
     st.image("https://streamlit.io/images/brand/streamlit-logo-secondary-colormark-lighttext.png")
