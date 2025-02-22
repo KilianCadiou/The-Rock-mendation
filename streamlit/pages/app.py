@@ -486,7 +486,7 @@ if choix_film:
 
 
         # Ouvrir le fichier ZIP
-        with zipfile.ZipFile('BD/mon_modele.pkl.zip', 'r') as zip_ref:
+        with zipfile.ZipFile('streamlit/mon_modele.pkl.zip', 'r') as zip_ref:
             # Ouvrir le fichier .pkl à l'intérieur du fichier ZIP
             with zip_ref.open('mon_modele.pkl', 'r') as f:  # Assurez-vous que le fichier s'appelle bien 'mon_modele.pkl' dans l'archive
                 model = pickle.load(f)
