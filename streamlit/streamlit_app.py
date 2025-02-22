@@ -5,8 +5,6 @@ nav = get_nav_from_toml("streamlit/.streamlit/pages.toml")
 
 st.logo("streamlit/img/logo.png")
 
-
-
 pg = st.navigation(nav)
 
 # add_page_title(pg)
