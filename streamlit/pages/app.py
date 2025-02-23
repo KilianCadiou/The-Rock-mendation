@@ -252,8 +252,9 @@ def pokemons_similaires(X, film_id, model, SN, poids, X_encoded, df):
 
 # Import des données
 
-df = pd.read_csv("BD/P2_G5_films.csv.gz", compression='gzip')
+df = pd.read_csv("P2_G5_films.csv.gz", compression='gzip')
 
+df = df.rename({'title_final_out_KNN' : 'title_out_KNN'}, axis = 1)
 # CHOIX DES CARACTERISTIQUES
 
 caracteristiques = []
@@ -339,15 +340,16 @@ if choix_film:
     # On vérifie si notre film existe
     df_recherche = df.copy()
     df_recherche['title_out_KNN'] = df_recherche['title_out_KNN'].apply(lambda x : x.lower())
-    recherche = choix_film
-    recherche2 = recherche.lower().split(" ")
+    recherche2 = choix_film.lower().split(" ")
+
+    st.markdown(recherche2)
 
     for element in recherche2:
         df_recherche2 = df_recherche[df_recherche['title_out_KNN'].str.contains(element)]
         df_recherche = df_recherche2
 
 
-    resultat = df[df['title_out_KNN'].str.contains(choix_film)]
+    resultat = df_recherche[df_recherche['title_out_KNN'].str.contains(choix_film)]
     
     selected_film = st.selectbox(
         "👇 Choisissez votre film",
@@ -364,6 +366,8 @@ if choix_film:
 
     # Si mon film est sélectionné, j'affiche les suggestions 
     # dans le selecbox
+
+    st.dataframe(df_selection)
 
     if selected_film:
         st.markdown("---")
@@ -445,7 +449,7 @@ if choix_film:
             html_resume2 = html_resume.content
             soup_resume = BeautifulSoup(html_resume2, 'html.parser')
 
-            for balise_parent in soup_affiche.find_all('span', class_='sc-3ac15c8d-1 gkeSEi'):
+            for balise_parent in soup_affiche.find_all('span', class_='sc-42125d72-0 gKbnVu'):
                 resume = balise_parent.get_text().strip()
 
 
