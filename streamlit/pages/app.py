@@ -284,15 +284,15 @@ bof = 1
 rien = 0
 
 poids = {
-    'popularity_final' : colonne_cle,
-    'year_final' : bof,
-    'Decennie' : important,
-    'runtime_final' : rien,
-    'vote_exact_final' : bof,
-    'vote_arrondi_final' : colonne_cle,
-    # 'vote_count_mean' : important,
-    'prod_US' : important,
-    'prod_FR' : important
+ 'popularity_final' : colonne_cle,
+ 'year_final' : bof,
+ 'Decennie' : tres_important,
+ 'runtime_final' : rien,
+ 'vote_exact_final' : important,
+ 'vote_arrondi_final' : colonne_cle,
+ 'vote_count_final' : tres_important,
+ 'prod_US' : important,
+ 'prod_FR' : important
 }
 
 for element in df.select_dtypes(include = 'number').columns:
@@ -342,8 +342,6 @@ if choix_film:
     df_recherche['title_out_KNN'] = df_recherche['title_out_KNN'].apply(lambda x : x.lower())
     recherche2 = choix_film.lower().split(" ")
 
-    st.markdown(recherche2)
-
     for element in recherche2:
         df_recherche2 = df_recherche[df_recherche['title_out_KNN'].str.contains(element)]
         df_recherche = df_recherche2
@@ -367,7 +365,6 @@ if choix_film:
     # Si mon film est sélectionné, j'affiche les suggestions 
     # dans le selecbox
 
-    st.dataframe(df_selection)
 
     if selected_film:
         st.markdown("---")
@@ -490,12 +487,12 @@ if choix_film:
 
 
         # Ouvrir le fichier ZIP
-        with zipfile.ZipFile('streamlit/mon_modele.pkl.zip', 'r') as zip_ref:
+        with zipfile.ZipFile('/Users/kilian/Documents/GitHub/The-Rock-mendation/mon_modele.pkl.zip', 'r') as zip_ref:
             # Ouvrir le fichier .pkl à l'intérieur du fichier ZIP
             with zip_ref.open('mon_modele.pkl', 'r') as f:  # Assurez-vous que le fichier s'appelle bien 'mon_modele.pkl' dans l'archive
                 model = pickle.load(f)
 
-        k=5
+        k=4
 
         caracteristiques.append('film_id_out_KNN')
         resultat = pokemons_similaires(df[caracteristiques], film_id, model, SN, poids, X_encoded, df)
@@ -545,12 +542,12 @@ if choix_film:
         trailer1, affiche1, acteur1, photos1, realisateur1, resume1 = info_films(str(final['film_id_out_KNN'].iloc[1]) )
         trailer2, affiche2, acteur2, photos2, realisateur2, resume2 = info_films(str(final['film_id_out_KNN'].iloc[2]) )
         trailer3, affiche3, acteur3, photos3, realisateur3, resume3 = info_films(str(final['film_id_out_KNN'].iloc[3]) )
-        trailer4, affiche4, acteur4, photos4, realisateur4, resume4 = info_films(str(final['film_id_out_KNN'].iloc[4]) )
+        #trailer4, affiche4, acteur4, photos4, realisateur4, resume4 = info_films(str(final['film_id_out_KNN'].iloc[4]) )
 
         # for n in range(len(final)):
         #     f'trailer{n}', f'affiche{n}', f'acteur{n}', f'photos{n}', f'realisateur{n}', f'resume{n}' = info_films(str(final['film_id_out_KNN'].iloc[n]))
 
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3 = st.columns(3)
 
         with col1:
             
@@ -591,17 +588,17 @@ if choix_film:
 
             st.markdown(html_reco_title, unsafe_allow_html=True)
 
-        with col4:
-            html_reco_title = f"""
-                <div class="film_reco">
-                    <img src="{affiche4}" />
-                    <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[4]}</h3>
-                    <h4>Note : {round(float(final['vote_exact_final'].iloc[4]), 2)}/10</h4>
-                    <p class="annee_film_reco">{int(final['year_final'].iloc[4])}</p>
-                </div>
-            """
+        # with col4:
+        #     html_reco_title = f"""
+        #         <div class="film_reco">
+        #             <img src="{affiche4}" />
+        #             <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[4]}</h3>
+        #             <h4>Note : {round(float(final['vote_exact_final'].iloc[4]), 2)}/10</h4>
+        #             <p class="annee_film_reco">{int(final['year_final'].iloc[4])}</p>
+        #         </div>
+        #     """
 
-            st.markdown(html_reco_title, unsafe_allow_html=True)
+            # st.markdown(html_reco_title, unsafe_allow_html=True)
 
 
 
