@@ -339,15 +339,15 @@ if choix_film:
 
     # On vérifie si notre film existe
     df_recherche = df.copy()
-    df_recherche['title_out_KNN'] = df_recherche['title_out_KNN'].apply(lambda x : x.lower())
+    df_recherche['title_out_KNN_lower'] = df_recherche['title_out_KNN'].apply(lambda x : x.lower())
     recherche2 = choix_film.lower().split(" ")
 
     for element in recherche2:
-        df_recherche2 = df_recherche[df_recherche['title_out_KNN'].str.contains(element)]
+        df_recherche2 = df_recherche[df_recherche['title_out_KNN_lower'].str.contains(element)]
         df_recherche = df_recherche2
 
 
-    resultat = df_recherche[df_recherche['title_out_KNN'].str.contains(choix_film)]
+    resultat = df_recherche[df_recherche['title_out_KNN_lower'].str.contains(choix_film)]
     
     selected_film = st.selectbox(
         "👇 Choisissez votre film",
