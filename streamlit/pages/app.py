@@ -347,7 +347,7 @@ if choix_film:
         df_recherche = df_recherche2
 
 
-    resultat = df_recherche[df_recherche['title_out_KNN_lower'].str.contains(choix_film)]
+    resultat = df_recherche2[df_recherche2['title_out_KNN_lower'].str.contains(choix_film)]
     
     selected_film = st.selectbox(
         "👇 Choisissez votre film",
