@@ -252,7 +252,7 @@ def pokemons_similaires(X, film_id, model, SN, poids, X_encoded, df):
 
 # Import des données
 
-df = pd.read_csv("P2_G5_films.csv.gz", compression='gzip')
+df = pd.read_csv("/Users/kilian/Documents/GitHub/The-Rock-mendation/P2_G5_films.csv.gz", compression='gzip')
 
 df = df.rename({'title_final_out_KNN' : 'title_out_KNN'}, axis = 1)
 # CHOIX DES CARACTERISTIQUES
