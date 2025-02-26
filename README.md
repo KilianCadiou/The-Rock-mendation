@@ -1,4 +1,7 @@
-![bannière](https://i.ibb.co/0htqWRt/ban-github.jpg)
+<p align="center">
+  <img src="https://i.ibb.co/0htqWRt/ban-github.jpg" alt="bannière">
+</p>
+
 
 # 🤘 The Rock'mendation
 
