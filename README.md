@@ -1,8 +1,13 @@
-![bannière](https://i.ibb.co/0htqWRt/ban-github.jpg)
+<p align="center">
+  <img src="https://i.ibb.co/0htqWRt/ban-github.jpg" alt="bannière"  style="width: 70%; max-width: 600px;">
+</p>
+
 
 # 🤘 The Rock'mendation
 
+<p align="justify">
 Nous sommes une équipe de passionnés de données et de cinéma, réunis par un projet ambitieux : concevoir un système de recommandation de films dédié à la Creuse. Combinant nos compétences en analyse de données, en machine learning et en visualisation, nous avons travaillé main dans la main pour créer une solution qui inspire et divertit. Chacun de nous apporte une expertise unique, qu’il s’agisse de programmation, de gestion de projet ou encore de créativité dans l’approche des problématiques. Ce projet est le fruit de notre collaboration, de nos échanges d’idées et de notre envie commune de transformer les données en une expérience accessible et personnalisée.
+</p>
 
 Accéder au site : [ICI](https://the-rockmendation.streamlit.app/)
 
