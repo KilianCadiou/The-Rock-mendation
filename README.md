@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.ibb.co/0htqWRt/ban-github.jpg" alt="bannière"  style="width: 70%; max-width: 600px;">
+  <img src="https://i.ibb.co/0htqWRt/ban-github.jpg" alt="bannière"  style="width: 90%; max-width: 600px;">
 </p>
 
 
