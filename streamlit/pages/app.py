@@ -231,7 +231,7 @@ def pokemons_similaires(X, film_id, model, SN, poids, X_encoded, df):
 
 # Import des données
 
-df = pd.read_csv("P2_G5_films.csv.gz", compression='gzip')
+df = pd.read_csv("Codes/P2_G5_films.csv.gz", compression='gzip')
 
 df = df.rename({'title_final_out_KNN' : 'title_out_KNN'}, axis = 1)
 
@@ -444,7 +444,7 @@ if choix_film:
 
             df_final = encodage_predict(df_a_predire, SN, poids, X_encoded)
 
-            with zipfile.ZipFile('mon_modele.pkl.zip', 'r') as zip_ref:
+            with zipfile.ZipFile('Codes/mon_modele.pkl.zip', 'r') as zip_ref:
                 with zip_ref.open('mon_modele.pkl', 'r') as f:
                     model = pickle.load(f)
 
