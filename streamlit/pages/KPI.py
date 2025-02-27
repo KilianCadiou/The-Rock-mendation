@@ -1,80 +1,80 @@
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
-import gdown
-px.defaults.template = "plotly_white"
+# import streamlit as st
+# import pandas as pd
+# import matplotlib.pyplot as plt
+# import seaborn as sns
+# import plotly.express as px
+# import gdown
+# px.defaults.template = "plotly_white"
 
-# Import CSS --------
+# # Import CSS --------
 
-def local_css(styles):
-    with open(styles) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+# def local_css(styles):
+#     with open(styles) as f:
+#         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-local_css("streamlit/styles.css")
+# local_css("streamlit/styles.css")
 
-# --------------------
+# # --------------------
 
-st.html("<h1>📊 Quelques chiffres clés</h1>")
-
-
-# KPI 1
+# st.html("<h1>📊 Quelques chiffres clés</h1>")
 
 
-st.html(
+# # KPI 1
 
-    "<h2>KPI 1 : Nombre de films par acteur/actrice</h2>"
+
+# st.html(
+
+#     "<h2>KPI 1 : Nombre de films par acteur/actrice</h2>"
                         
-)
+# )
 
-# Lecture du fichier
-df = pd.read_csv('kpi_extracts/KPI1Extract.csv.gz')
-df = df.dropna(subset=['Acteur/Actrice'])
-df['Acteur/Actrice'] = df['Acteur/Actrice'].astype(str)
+# # Lecture du fichier
+# df = pd.read_csv('kpi_extracts/KPI1Extract.csv.gz')
+# df = df.dropna(subset=['Acteur/Actrice'])
+# df['Acteur/Actrice'] = df['Acteur/Actrice'].astype(str)
 
-# On affiche les 25 premiers
-df_test = df.head(25)
+# # On affiche les 25 premiers
+# df_test = df.head(25)
 
-# Affichage du graphique
-fig = plt.figure(figsize=(10, 6))
-plt.plot(df_test['Acteur/Actrice'], df_test['Nombre de films'], label='KPI1', marker='o')
+# # Affichage du graphique
+# fig = plt.figure(figsize=(10, 6))
+# plt.plot(df_test['Acteur/Actrice'], df_test['Nombre de films'], label='KPI1', marker='o')
 
-plt.xlabel('Acteur/Actrice')
-plt.ylabel('Nombre de films')
-# plt.title('Nombre de films par acteur/actrice')
-plt.xticks(rotation=90)
-plt.legend()
+# plt.xlabel('Acteur/Actrice')
+# plt.ylabel('Nombre de films')
+# # plt.title('Nombre de films par acteur/actrice')
+# plt.xticks(rotation=90)
+# plt.legend()
+
+# # plt.tight_layout()
+# st.pyplot(fig)
+
+# # KPI2
+
+# st.html("""
+
+#     <h2>KPI 2 : Durée des films par années</h2>
+                        
+#             """)
+
+# # Lecture du fichier
+# df = pd.read_csv('kpi_extracts/KPI2Extract.csv.gz')
+
+# # Moyenne des durées de films
+# df_test = df.groupby('year_exact')['runtime_exact'].mean()
+
+# # Affichage du graph
+# fig2 = plt.figure(figsize=(10, 6))
+# plt.plot(df_test, label='KPI2', marker='o')
+
+# plt.xlabel('Années des films')
+# plt.ylabel('Durée des films')
+# # plt.title('Durée des films par années')
+# plt.xticks(rotation=45)
+# plt.legend()
 
 # plt.tight_layout()
-st.pyplot(fig)
-
-# KPI2
-
-st.html("""
-
-    <h2>KPI 2 : Durée des films par années</h2>
-                        
-            """)
-
-# Lecture du fichier
-df = pd.read_csv('kpi_extracts/KPI2Extract.csv.gz')
-
-# Moyenne des durées de films
-df_test = df.groupby('year_exact')['runtime_exact'].mean()
-
-# Affichage du graph
-fig2 = plt.figure(figsize=(10, 6))
-plt.plot(df_test, label='KPI2', marker='o')
-
-plt.xlabel('Années des films')
-plt.ylabel('Durée des films')
-# plt.title('Durée des films par années')
-plt.xticks(rotation=45)
-plt.legend()
-
-plt.tight_layout()
-st.pyplot(fig2)
+# st.pyplot(fig2)
 
 
 # KPI 3
