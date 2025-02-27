@@ -79,11 +79,11 @@ st.pyplot(fig2)
 
 # KPI 3
 
-st.html("""
+# st.html("""
 
-    <h2>KPI 3 : Nombres d'acteur en fonction de leurs âges au moment du film (ou série)</h2>
+#     <h2>KPI 3 : Nombres d'acteur en fonction de leurs âges au moment du film (ou série)</h2>
                         
-            """)
+#             """)
 
 # # Lecture des fichiers
 
