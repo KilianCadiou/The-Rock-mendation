@@ -11,3 +11,4 @@ scikit-learn
 seaborn
 rapidfuzz
 st-pages
+gdown

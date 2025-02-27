@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+import gdown
 px.defaults.template = "plotly_white"
 
 # Import CSS --------
@@ -86,9 +87,30 @@ st.html("""
 
 # Lecture des fichiers
 
-df = pd.read_csv('kpi_extracts/KPI3ActeurTV.csv.gz',)
-df_duo = pd.read_csv('kpi_extracts/KPI3Duo.csv.gz',)
-df_film = pd.read_csv('kpi_extracts/KPI3Film.csv.gz')
+file_id = "1J3mgMOQUfiY3RTLd7huTO2IU7AUhHH8b"
+url = f"https://drive.google.com/uc?export=download&id={file_id}"
+
+output = "KPI3ActeurTV.csv.gz"
+gdown.download(url, output, quiet=False)
+
+df = pd.read_csv(output, compression='gzip')
+
+file_id = "1JAaYGoTYx435i5-bQlCekj6qiQt3RLBt"
+url = f"https://drive.google.com/uc?export=download&id={file_id}"
+
+output = "KPI3Duo.csv.gz"
+gdown.download(url, output, quiet=False)
+
+df_duo = pd.read_csv(output, compression='gzip')
+
+file_id = "1J55RhlH8mpnkZnD2O1CthE_DczdcWOaY"
+url = f"https://drive.google.com/uc?export=download&id={file_id}"
+
+output = "KPI3Film.csv.gz"
+gdown.download(url, output, quiet=False)
+
+df_film = pd.read_csv(output, compression='gzip')
+
 
 # Calcul des âges
 df_total = df.groupby('birthYear')['nconst'].count()
@@ -114,107 +136,107 @@ st.pyplot(fig3)
 
 
 
-# KPI 4
+# # KPI 4
 
-st.html("""
+# st.html("""
 
-    <h2>KPI 4 : Âge des acteurs au moment des tournages</h2>
+#     <h2>KPI 4 : Âge des acteurs au moment des tournages</h2>
                         
-            """)
+#             """)
 
-df = pd.read_csv('kpi_extracts/KPI4Bis.csv.gz',)
-
-
-test_film = df.groupby('age')['nconst'].count()
-test_film = test_film[test_film.index>10]
-test_film = test_film[test_film.index<100]
-test2 = pd.DataFrame(test_film).reset_index()
-
-test2['Tranches'] = ''
-test2['age'] = test2['age'].fillna('0')
-test2['age'] = test2['age'].replace('nan', '0')
-test2['age'] = test2['age'].astype(str)
-test2['Tranches'] = test2['age'].str[:1] + "0"
-test2['age'] = pd.to_numeric(test2['age'])
-test2['Tranches'] = pd.to_numeric(test2['Tranches'])
-
-test3 = pd.DataFrame(test2['Tranches'].value_counts()).reset_index()
+# df = pd.read_csv('kpi_extracts/KPI4Bis.csv.gz',)
 
 
+# test_film = df.groupby('age')['nconst'].count()
+# test_film = test_film[test_film.index>10]
+# test_film = test_film[test_film.index<100]
+# test2 = pd.DataFrame(test_film).reset_index()
 
-fig4 = plt.figure(figsize=(8, 8))
-plt.pie(test3['Tranches'], labels = test3['Tranches'], autopct='%1.1f%%', startangle=90)
-# plt.title('Âge des acteurs au moment des tournages')
-st.pyplot(fig4)
+# test2['Tranches'] = ''
+# test2['age'] = test2['age'].fillna('0')
+# test2['age'] = test2['age'].replace('nan', '0')
+# test2['age'] = test2['age'].astype(str)
+# test2['Tranches'] = test2['age'].str[:1] + "0"
+# test2['age'] = pd.to_numeric(test2['age'])
+# test2['Tranches'] = pd.to_numeric(test2['Tranches'])
+
+# test3 = pd.DataFrame(test2['Tranches'].value_counts()).reset_index()
 
 
-# KPI 5
 
-st.html("""
+# fig4 = plt.figure(figsize=(8, 8))
+# plt.pie(test3['Tranches'], labels = test3['Tranches'], autopct='%1.1f%%', startangle=90)
+# # plt.title('Âge des acteurs au moment des tournages')
+# st.pyplot(fig4)
 
-    <h2>KPI 5 : Budget, période et genre des films les mieux notés</h2>
+
+# # KPI 5
+
+# st.html("""
+
+#     <h2>KPI 5 : Budget, période et genre des films les mieux notés</h2>
                         
-            """)
+#             """)
 
-# Lecture des fichiers
-budget = pd.read_csv('kpi_extracts/KPI5Budget.csv.gz',)
-Decennie = pd.read_csv('kpi_extracts/KPI5Decennie.csv.gz',)
-Genre = pd.read_csv('kpi_extracts/KPI5Genre.csv.gz',)
+# # Lecture des fichiers
+# budget = pd.read_csv('kpi_extracts/KPI5Budget.csv.gz',)
+# Decennie = pd.read_csv('kpi_extracts/KPI5Decennie.csv.gz',)
+# Genre = pd.read_csv('kpi_extracts/KPI5Genre.csv.gz',)
 
 
-st.html("""
+# st.html("""
 
-    <h3>Budget des meilleurs films</h3>
+#     <h3>Budget des meilleurs films</h3>
             
-            """)
+#             """)
 
-# Affichage du premier graph
-fig5a = plt.figure(figsize=(8, 8))
-plt.pie(budget['Apparition'], labels = budget['Budget'], autopct='%1.1f%%', startangle=90)
-plt.title('Budget des meilleurs films')
-st.pyplot(fig5a)
+# # Affichage du premier graph
+# fig5a = plt.figure(figsize=(8, 8))
+# plt.pie(budget['Apparition'], labels = budget['Budget'], autopct='%1.1f%%', startangle=90)
+# plt.title('Budget des meilleurs films')
+# st.pyplot(fig5a)
 
 
 
-st.html("""
+# st.html("""
 
-    <h3>Les périodes des films les mieux notés</h3>
+#     <h3>Les périodes des films les mieux notés</h3>
             
-            """)
+#             """)
 
-# Création d'un DF optimisé
-data = {
-    'decennie': ['Avant 1950', '1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s'],
-    'count': [6, 2803, 4390, 5366, 6545, 8490, 18738, 37770, 20569],
-    'Apparition': [8.98, 2.56, 4.03, 4.93, 5.99, 7.79, 17.17, 34.63, 18.86]
-}
+# # Création d'un DF optimisé
+# data = {
+#     'decennie': ['Avant 1950', '1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s'],
+#     'count': [6, 2803, 4390, 5366, 6545, 8490, 18738, 37770, 20569],
+#     'Apparition': [8.98, 2.56, 4.03, 4.93, 5.99, 7.79, 17.17, 34.63, 18.86]
+# }
 
-df = pd.DataFrame(data)
+# df = pd.DataFrame(data)
 
-# Affichage du graph
-fig5b = plt.figure(figsize=(8, 8))
-plt.pie(df['Apparition'], labels=df['decennie'], autopct='%1.1f%%', startangle=90)
-# plt.title('Les périodes des films les mieux notés')
-st.pyplot(fig5b)
+# # Affichage du graph
+# fig5b = plt.figure(figsize=(8, 8))
+# plt.pie(df['Apparition'], labels=df['decennie'], autopct='%1.1f%%', startangle=90)
+# # plt.title('Les périodes des films les mieux notés')
+# st.pyplot(fig5b)
 
 
-st.html("""
+# st.html("""
 
-    <h3>Les genres des films les mieux notés</h3>
+#     <h3>Les genres des films les mieux notés</h3>
             
-            """)
+#             """)
 
-# Création d'un DF optimisé
-data2 = {
-    'Genre': ['Autres', 'Family', 'Adventure', 'Biography', 'Thriller', 'History', 'Action', 'Crime', 'Music', 'Romance', 'Comedy', 'Documentary', 'Drama'],
-    'count': [8370, 2356, 2493, 2851, 2873, 3076, 3282, 3404, 3469, 5214, 8155, 13576, 19877],
-    'Pourcentage apparition': [11.97, 3.37, 3.57, 4.08, 4.11, 4.41, 4.71, 4.89, 5.00, 7.51, 11.77, 19.58, 28.02] 
-}
+# # Création d'un DF optimisé
+# data2 = {
+#     'Genre': ['Autres', 'Family', 'Adventure', 'Biography', 'Thriller', 'History', 'Action', 'Crime', 'Music', 'Romance', 'Comedy', 'Documentary', 'Drama'],
+#     'count': [8370, 2356, 2493, 2851, 2873, 3076, 3282, 3404, 3469, 5214, 8155, 13576, 19877],
+#     'Pourcentage apparition': [11.97, 3.37, 3.57, 4.08, 4.11, 4.41, 4.71, 4.89, 5.00, 7.51, 11.77, 19.58, 28.02] 
+# }
 
-df = pd.DataFrame(data2)
+# df = pd.DataFrame(data2)
 
-# Affichage du graph
-fig5c = plt.figure(figsize=(8, 8))
-plt.pie(df['count'], labels=df['Genre'], autopct='%1.1f%%', startangle=90)
-# plt.title('Les genres des films les mieux notés')
-st.pyplot(fig5c)
+# # Affichage du graph
+# fig5c = plt.figure(figsize=(8, 8))
+# plt.pie(df['count'], labels=df['Genre'], autopct='%1.1f%%', startangle=90)
+# # plt.title('Les genres des films les mieux notés')
+# st.pyplot(fig5c)
