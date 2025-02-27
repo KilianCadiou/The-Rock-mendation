@@ -85,54 +85,54 @@ st.html("""
                         
             """)
 
-# Lecture des fichiers
+# # Lecture des fichiers
 
-file_id = "1J3mgMOQUfiY3RTLd7huTO2IU7AUhHH8b"
-url = f"https://drive.google.com/uc?export=download&id={file_id}"
+# file_id = "1J3mgMOQUfiY3RTLd7huTO2IU7AUhHH8b"
+# url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
-output = "KPI3ActeurTV.csv.gz"
-gdown.download(url, output, quiet=False)
+# output = "KPI3ActeurTV.csv.gz"
+# gdown.download(url, output, quiet=False)
 
-df = pd.read_csv(output, compression='gzip')
+# df = pd.read_csv(output, compression='gzip')
 
-file_id = "1JAaYGoTYx435i5-bQlCekj6qiQt3RLBt"
-url = f"https://drive.google.com/uc?export=download&id={file_id}"
+# file_id = "1JAaYGoTYx435i5-bQlCekj6qiQt3RLBt"
+# url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
-output = "KPI3Duo.csv.gz"
-gdown.download(url, output, quiet=False)
+# output = "KPI3Duo.csv.gz"
+# gdown.download(url, output, quiet=False)
 
-df_duo = pd.read_csv(output, compression='gzip')
+# df_duo = pd.read_csv(output, compression='gzip')
 
-file_id = "1J55RhlH8mpnkZnD2O1CthE_DczdcWOaY"
-url = f"https://drive.google.com/uc?export=download&id={file_id}"
+# file_id = "1J55RhlH8mpnkZnD2O1CthE_DczdcWOaY"
+# url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
-output = "KPI3Film.csv.gz"
-gdown.download(url, output, quiet=False)
+# output = "KPI3Film.csv.gz"
+# gdown.download(url, output, quiet=False)
 
-df_film = pd.read_csv(output, compression='gzip')
+# df_film = pd.read_csv(output, compression='gzip')
 
 
-# Calcul des âges
-df_total = df.groupby('birthYear')['nconst'].count()
-test_duo = df_duo.groupby('birthYear')['nconst'].count()
-test_film = df_film.groupby('birthYear')['nconst'].count()
-test_film = test_film[test_film.index>1800]
-test_duo = test_duo[test_duo.index>1800]
+# # Calcul des âges
+# df_total = df.groupby('birthYear')['nconst'].count()
+# test_duo = df_duo.groupby('birthYear')['nconst'].count()
+# test_film = df_film.groupby('birthYear')['nconst'].count()
+# test_film = test_film[test_film.index>1800]
+# test_duo = test_duo[test_duo.index>1800]
 
-# Affichage du graph
-fig3 = plt.figure(figsize=(10, 6))
-plt.plot(test_film, label='Film', marker='o')
-plt.plot(df_total, label='Serie', marker='o')
-plt.plot(test_duo, label='Duo', marker='o')
+# # Affichage du graph
+# fig3 = plt.figure(figsize=(10, 6))
+# plt.plot(test_film, label='Film', marker='o')
+# plt.plot(df_total, label='Serie', marker='o')
+# plt.plot(test_duo, label='Duo', marker='o')
 
-plt.xlabel('Année de naissance des acteurs')
-plt.ylabel("Nombre d'acteur en fonction des carrières")
-# plt.title("Nombres d'acteur en fonction des années de naissance par film ou série")
-plt.xticks(rotation=45)
-plt.legend()
+# plt.xlabel('Année de naissance des acteurs')
+# plt.ylabel("Nombre d'acteur en fonction des carrières")
+# # plt.title("Nombres d'acteur en fonction des années de naissance par film ou série")
+# plt.xticks(rotation=45)
+# plt.legend()
 
-plt.tight_layout()
-st.pyplot(fig3)
+# plt.tight_layout()
+# st.pyplot(fig3)
 
 
 
