@@ -334,50 +334,16 @@ if len(liste_df_recherche) == 0:
         id = df_recherche4[df_recherche4['total_title_out_KNN'] == element[0]]['film_id_out_KNN'].iloc[0]
         liste_id_resultat_nom.append(id)
 
-    # for n in range(len(resultat_nom2)):
-    #     id = df_recherche4[df_recherche4['total_title_out_KNN'] == resultat_nom[n]]['film_id_out_KNN'].iloc[0]
-    #     liste_id_resultat_nom.append(id)
-    
     for element in liste_id_resultat_nom:
         nom_annee = df_recherche4[df_recherche4['film_id_out_KNN'] == element]['Titre'].iloc[0]
         liste_df_recherche.append(nom_annee)
 
-    # for m in range(len(liste_id_resultat_nom)):
-
-    #     nom_annee = df_recherche4[df_recherche4['film_id_out_KNN'] == liste_id_resultat_nom[m]]['Titre'].iloc[0]
-    #     liste_df_recherche.append(nom_annee)
-    
     df_recherche = df_recherche4
 
 if choix_film:    
 
     name = st.selectbox("👇 Choisissez votre film :",(liste_df_recherche))
 
-# resultat_titre = process.extract(choix_film, df_recherche['Titre'].to_list(), score_cutoff = 40, limit = 5)
-
-# if choix_film:
-
-#     df_recherche['total_title_out_KNN_lower'] = df_recherche['total_title_out_KNN'].apply(lambda x : x.lower())
-#     recherche2 = choix_film.lower().split(" ")
-
-#     for element in recherche2:
-#         df_recherche2 = df_recherche[df_recherche['total_title_out_KNN_lower'].str.contains(element)]
-#         df_recherche = df_recherche2
-
-#     resultat = df_recherche2
-    
-#     if len(resultat) == 0:
-#         st.markdown("Nous n'avons pas ce film dans notre base de données.")
-
-
-    # else:
-            
-    #     selected_film = st.selectbox(
-    #         "👇 Choisissez votre film",
-    #         resultat['Titre'],
-    #         index=None,
-    #         placeholder="Select")
-    
     if name:
             
         df_selection = df[df['Titre'] == name]
@@ -577,74 +543,3 @@ if choix_film:
                     st.markdown(html_synopsis, unsafe_allow_html=True)
 
                 st.markdown("---")
-
-            # trailer1, affiche1, acteur1, photos1, realisateur1, resume1 = info_films(str(final['film_id_out_KNN'].iloc[1]) )
-            # trailer2, affiche2, acteur2, photos2, realisateur2, resume2 = info_films(str(final['film_id_out_KNN'].iloc[2]) )
-            # trailer3, affiche3, acteur3, photos3, realisateur3, resume3 = info_films(str(final['film_id_out_KNN'].iloc[3]) )
-
-            # col1, col2, col3 = st.columns(3)
-
-            # with col1:
-                
-            #     html_reco_title = f"""
-            #         <div class="film_reco">
-            #             <img src="{affiche1}" />
-            #             <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[1]}</h3>
-            #             <h4>Note : {round(float(final['vote_exact_final'].iloc[1]), 2)}/10</h4>
-            #             <p class="annee_film_reco">{int(final['year_final'].iloc[1])}</p>
-            #         </div>
-            #     """
-
-            #     html_reco_title = f"""
-            #         <div class="film_reco">
-            #             <img src="{affiche1}" />
-            #             <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[1]}</h3>
-            #             <h4>Note : {round(float(final['vote_exact_final'].iloc[1]), 2)}/10</h4>
-            #             <p class="annee_film_reco">{int(final['year_final'].iloc[1])}</p>
-            #         </div>
-            #     """
-
-            #     html_reco_title = f"""
-            #         <div class="film_reco">
-            #             <img src="{affiche1}" />
-            #             <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[1]}</h3>
-            #             <h4>Note : {round(float(final['vote_exact_final'].iloc[1]), 2)}/10</h4>
-            #             <p class="annee_film_reco">{int(final['year_final'].iloc[1])}</p>
-            #         </div>
-            #     """
-
-            #     st.markdown(html_reco_title, unsafe_allow_html=True)
-
-            # with col2:
-            #     html_reco_title = f"""
-            #         <div class="film_reco">
-            #             <img src="{affiche2}" />
-            #             <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[2]}</h3>
-            #             <h4>Note : {round(float(final['vote_exact_final'].iloc[2]), 2)}/10</h4>
-            #             <p class="annee_film_reco">{int(final['year_final'].iloc[2])}</p>
-            #         </div>
-            #     """
-
-            #     st.markdown(html_reco_title, unsafe_allow_html=True)
-
-            # with col3:
-            #     html_reco_title = f"""
-            #         <div class="film_reco">
-            #             <img src="{affiche3}" />
-            #             <h3 class="titre_film_reco">{final['title_out_KNN'].iloc[3]}</h3>
-            #             <h4>Note : {round(float(final['vote_exact_final'].iloc[3]), 2)}/10</h4>
-            #             <p class="annee_film_reco">{int(final['year_final'].iloc[3])}</p>
-            #         </div>
-            #     """
-
-            #     st.markdown(html_reco_title, unsafe_allow_html=True)
-
-
-
-
-            
-
-
-
-
-
