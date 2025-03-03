@@ -1,29 +1,16 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import ast
 import warnings
-import gzip
 import zipfile
 import pickle
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
-
-
-# modèle
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.neighbors import NearestNeighbors
-from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import KNeighborsClassifier
+from rapidfuzz import process
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 from bs4 import BeautifulSoup
 import requests
-import re
 navigator = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1)'
 url_base = 'https://www.imdb.com'
 url_base_title = 'https://www.imdb.com/fr/title/'
@@ -235,6 +222,7 @@ df = pd.read_csv("Codes/P2_G5_films.csv.gz", compression='gzip')
 
 df = df.rename({'title_final_out_KNN' : 'title_out_KNN'}, axis = 1)
 
+df['total_title_out_KNN'] = df['total_title_out_KNN'].apply(lambda x : x.lower())
 # CHOIX DES CARACTERISTIQUES
 
 caracteristiques = []
@@ -313,33 +301,88 @@ st.html("<p>Bienvenu sur notre service de recommandation de films. Choisissez un
 
 # Sélectionner le film
 
-choix_film = st.text_input("🔍 Recherchez votre film")
+df_recherche = df.copy()
+df_recherche4 = df_recherche.copy()
 
-if choix_film:
+choix_film = st.text_input("🔍 Recherchez votre film :")
 
-    df_recherche = df.copy()
-    df_recherche['total_title_out_KNN_lower'] = df_recherche['total_title_out_KNN'].apply(lambda x : x.lower())
-    recherche2 = choix_film.lower().split(" ")
+resultat_nom = process.extract(choix_film, df_recherche['total_title_out_KNN'].to_list(), score_cutoff = 60, limit = 20)
 
-    for element in recherche2:
-        df_recherche2 = df_recherche[df_recherche['total_title_out_KNN_lower'].str.contains(element)]
-        df_recherche = df_recherche2
+resultat_nom2 = []
+
+for element in resultat_nom:
+    if len(element[0]) > 4:
+        resultat_nom2.append(element)
 
 
-    resultat = df_recherche2
+recherche = choix_film.lower().split(" ")
+
+for element in recherche:
+    df_recherche2 = df_recherche[df_recherche['total_title_out_KNN'].str.contains(element)]
+    df_recherche = df_recherche2
+
+liste_df_recherche = []
+
+for n in range(len(df_recherche)):
+    liste_df_recherche.append(df_recherche['Titre'].iloc[n])
+
+if len(liste_df_recherche) == 0:
+
+    liste_id_resultat_nom = []
+
+    for element in resultat_nom2:
+        id = df_recherche4[df_recherche4['total_title_out_KNN'] == element[0]]['film_id_out_KNN'].iloc[0]
+        liste_id_resultat_nom.append(id)
+
+    # for n in range(len(resultat_nom2)):
+    #     id = df_recherche4[df_recherche4['total_title_out_KNN'] == resultat_nom[n]]['film_id_out_KNN'].iloc[0]
+    #     liste_id_resultat_nom.append(id)
     
-    if len(resultat) == 0:
-        st.markdown("Nous n'avons pas ce film dans notre base de données.")
+    for element in liste_id_resultat_nom:
+        nom_annee = df_recherche4[df_recherche4['film_id_out_KNN'] == element]['Titre'].iloc[0]
+        liste_df_recherche.append(nom_annee)
 
-    else:
+    # for m in range(len(liste_id_resultat_nom)):
+
+    #     nom_annee = df_recherche4[df_recherche4['film_id_out_KNN'] == liste_id_resultat_nom[m]]['Titre'].iloc[0]
+    #     liste_df_recherche.append(nom_annee)
+    
+    df_recherche = df_recherche4
+
+if choix_film:    
+
+    name = st.selectbox("👇 Choisissez votre film :",(liste_df_recherche))
+
+# resultat_titre = process.extract(choix_film, df_recherche['Titre'].to_list(), score_cutoff = 40, limit = 5)
+
+# if choix_film:
+
+#     df_recherche['total_title_out_KNN_lower'] = df_recherche['total_title_out_KNN'].apply(lambda x : x.lower())
+#     recherche2 = choix_film.lower().split(" ")
+
+#     for element in recherche2:
+#         df_recherche2 = df_recherche[df_recherche['total_title_out_KNN_lower'].str.contains(element)]
+#         df_recherche = df_recherche2
+
+#     resultat = df_recherche2
+    
+#     if len(resultat) == 0:
+#         st.markdown("Nous n'avons pas ce film dans notre base de données.")
+
+
+    # else:
             
-        selected_film = st.selectbox(
-            "👇 Choisissez votre film",
-            resultat['Titre'],
-            index=None,
-            placeholder="Select")
-        
-        df_selection = resultat[resultat['Titre'] == selected_film]
+    #     selected_film = st.selectbox(
+    #         "👇 Choisissez votre film",
+    #         resultat['Titre'],
+    #         index=None,
+    #         placeholder="Select")
+    
+    if name:
+            
+        df_selection = df[df['Titre'] == name]
+
+        selected_film = name
 
         if selected_film:
             st.markdown("---")
