@@ -76,17 +76,24 @@ def info_films(id):
 
     #ACTEURS
 
-    html_acteurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
-    soup_acteurs = BeautifulSoup(html_acteurs.content, 'html.parser')
+    html_acteurs = requests.get(url_finale_title, headers={"User-Agent": navigator})
+    soup_acteurs = BeautifulSoup(html_acteurs.content, "html.parser")
 
-    # Récupérer les <a> avec data-testid="title-cast-item__actor"
-    liste_acteurs = [
-        a.get_text(strip=True)
-        for a in soup_acteurs.find_all("a", attrs={"data-testid": "title-cast-item__actor"})
-]
+    # Récupérer les acteurs via le testid stable
+    liste_acteurs = []
 
-    if len(liste_acteurs) > 4:
-        liste_acteurs = liste_acteurs[:4]
+    for a in soup_acteurs.find_all("a", attrs={"data-testid": "title-cast-item__actor"}):
+        nom = a.get_text(strip=True)
+        if nom and nom not in liste_acteurs:  # éviter les doublons
+            liste_acteurs.append(nom)
+
+    # Limite à 4
+    liste_acteurs = liste_acteurs[:4]
+
+    # Sécurité : si aucune donnée trouvée
+    if not liste_acteurs:
+        liste_acteurs = ["Acteur inconnu"]
+
 
     #PHOTOS ACTEURS
 
