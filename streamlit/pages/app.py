@@ -24,93 +24,118 @@ import pickle
 
 def info_films(id):
 
-    if not id:
-        return None
-
-    # Valeurs par défaut
     lien_trailer = "Aucune bande-annonce disponible"
     lien_affiche = "Aucune affiche disponible"
-    liste_acteurs = ["Acteur inconnu"]
+    liste_acteurs = []
     dico_photos_final = {}
     realisateur = "Inconnu"
     resume = "Résumé non disponible"
 
-    url_base = "https://www.imdb.com"
-    url_title = f"https://www.imdb.com/fr/title/{id}"
+    url_base = 'https://www.imdb.com'
+    url_base_title = 'https://www.imdb.com/fr/title/'
+    url_finale_title = f'{url_base_title}{id}'
 
-    # --- 1 seule requête HTTP
-    try:
-        html = requests.get(url_title, headers={"User-Agent": navigator}).content
-        soup = BeautifulSoup(html, "html.parser")
-    except Exception:
-        return lien_trailer, lien_affiche, liste_acteurs, dico_photos_final, realisateur, resume
+    if id == None:
+        return 
 
-    # --- TRAILER
-    lien_trailer = "Aucune bande-annonce disponible"
+    #TRAILER
 
-    trailer_tag = soup.find(
-        "a",
-        class_="ipc-lockup-overlay ipc-focusable ipc-focusable--constrained",
-        href=True
-    )
+    html_title = requests.get(url_finale_title, headers={'User-Agent': navigator})
+    html_title2 = html_title.content
+    soup_title = BeautifulSoup(html_title2, 'html.parser')
 
-    if trailer_tag and "video" in trailer_tag["href"]:
-        lien_trailer = "https://www.imdb.com" + trailer_tag["href"]
+    for balise_parent in soup_title.find_all('div', class_='ipc-page-content-container ipc-page-content-container--center'):
+        for element in balise_parent.find_all('a', class_='ipc-lockup-overlay ipc-focusable'):
+            try:
+                if 'video' in element['href']:
+                    trailer = element['href']
+                    lien_trailer = f'{url_base}{trailer}'
+                break
+            except:
+                lien_trailer = "Unknown"
 
+    
 
-    # --- AFFICHE (Poster principal)
-    poster = soup.find("img", {"class": "ipc-image"})
-    if poster and poster.get("src"):
-        lien_affiche = poster["src"]
+    #AFFICHE
 
-    # --- ACTEURS (via data-testid)
-    acteurs = [
+    html_affiche = requests.get(url_finale_title, headers={'User-Agent': navigator})
+    html_affiche2 = html_affiche.content
+    soup_affiche = BeautifulSoup(html_affiche2, 'html.parser')
+    affiche = ''
+
+    for balise_parent in soup_affiche.find_all('div', class_='ipc-page-content-container ipc-page-content-container--center'):
+        for element in balise_parent.find_all('img', class_='ipc-image'):
+            affiche += f", {element['src']}"
+
+    affiche = affiche.split(', ')
+
+    if "" in affiche:
+        affiche.remove("")
+
+    lien_affiche = affiche[0]
+
+    #ACTEURS
+
+    html_acteurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
+    soup_acteurs = BeautifulSoup(html_acteurs.content, 'html.parser')
+
+    # Récupérer les <a> avec data-testid="title-cast-item__actor"
+    liste_acteurs = [
         a.get_text(strip=True)
-        for a in soup.find_all("a", attrs={"data-testid": "title-cast-item__actor"})
-    ]
-    if acteurs:
-        acteurs = list(dict.fromkeys(acteurs))  # supprime doublons, garde l’ordre
-        liste_acteurs = acteurs[:4]
+        for a in soup_acteurs.find_all("a", attrs={"data-testid": "title-cast-item__actor"})
+]
 
-    # --- PHOTOS ACTEURS
-    image_tags = soup.find_all("img", class_="ipc-image")
+    if len(liste_acteurs) > 4:
+        liste_acteurs = liste_acteurs[:4]
 
-    photos_map = {
-        img.get("alt", "").strip(): img.get("src")
-        for img in image_tags
-        if img.get("alt") and img.get("src")
-    }
+    #PHOTOS ACTEURS
 
-    dico_photos_final = {
-        acteur: photos_map.get(acteur, None)
-        for acteur in liste_acteurs
-        if acteur in photos_map
-    }
+    html_acteurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
+    soup_acteurs = BeautifulSoup(html_acteurs.content, 'html.parser')
 
-    # --- RÉALISATEUR
-    realisateur = "Inconnu"
-    realisateur_tag = soup.find(
-        "a",
-        class_="ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link"
-    )
+    dico_photos = {}
+    dico_photos_final = {}
 
-    if realisateur_tag:
-        realisateur = realisateur_tag.get_text(strip=True)
+    # On récupère toutes les images du cast
+    for img in soup_acteurs.find_all("img", class_="ipc-image"):
+        alt = img.get("alt")
+        src = img.get("src")
+
+        # On garde seulement les images d'acteurs (les alt contiennent le nom)
+        if alt and src:
+            dico_photos[alt.strip()] = src
+
+    # On filtre pour ne garder que les acteurs recherchés
+    for acteur in liste_acteurs:
+
+        if acteur in dico_photos:
+            dico_photos_final[acteur] = dico_photos[acteur]
 
 
-    # --- RÉSUMÉ
-    resume_tag = soup.find("span", attrs={"data-testid": "plot-xs_to_m"})
-    if resume_tag:
-        resume = resume_tag.get_text(strip=True)
+    #REALISATEUR
 
-    return (
-        lien_trailer,
-        lien_affiche,
-        liste_acteurs,
-        dico_photos_final,
-        realisateur,
-        resume
-    )
+    html_realisateurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
+    html_realisateurs2 = html_realisateurs.content
+    soup_realisateurs = BeautifulSoup(html_realisateurs2, 'html.parser')
+    liste_realisateurs = []
+    for balise_parent in soup_realisateurs.find_all('a', class_='ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link'):
+        liste_realisateurs.append(balise_parent.get_text().strip())
+
+    realisateur = liste_realisateurs[0]
+
+    #RESUME
+
+    html_resume = requests.get(url_finale_title, headers={'User-Agent': navigator})
+    soup_resume = BeautifulSoup(html_resume.content, 'html.parser')
+
+    resume = "Unknown"
+
+    balise = soup_resume.find("span", attrs={"data-testid": "plot-xs_to_m"})
+    if balise:
+        resume = balise.get_text(strip=True)
+
+
+    return lien_trailer, lien_affiche, liste_acteurs, dico_photos_final, realisateur, resume
 
 
 
