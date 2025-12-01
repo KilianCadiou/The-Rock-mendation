@@ -107,6 +107,7 @@ def info_films(id):
 
     # On filtre pour ne garder que les acteurs recherchés
     for acteur in liste_acteurs:
+        
         if acteur in dico_photos:
             dico_photos_final[acteur] = dico_photos[acteur]
 
