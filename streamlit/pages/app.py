@@ -519,14 +519,10 @@ if choix_film:
 
                     st.html("<h3>🤵 Casting</h3>")
 
-                    html_list_actors = f"""
-                        <ul>
-                            <li>{acteur[0]}</li>
-                            <li>{acteur[1]}</li>
-                            <li>{acteur[2]}</li>
-                            <li>{acteur[3]}</li>
-                        </ul>
-                    """
+                    html_list_actors = "<ul>"
+                    for a in acteur:
+                        html_list_actors += f"<li>{a}</li>"
+                    html_list_actors += "</ul>"
 
                     st.markdown(html_list_actors, unsafe_allow_html=True)
 
