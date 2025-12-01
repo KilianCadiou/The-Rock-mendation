@@ -107,7 +107,7 @@ def info_films(id):
 
     # On filtre pour ne garder que les acteurs recherchés
     for acteur in liste_acteurs:
-        
+
         if acteur in dico_photos:
             dico_photos_final[acteur] = dico_photos[acteur]
 
@@ -411,14 +411,11 @@ if choix_film:
 
                 st.html("<h3>🤵 Casting</h3>")
 
-                html_list_actors = f"""
-                    <ul>
-                        <li>{acteur[0]}</li>
-                        <li>{acteur[1]}</li>
-                        <li>{acteur[2]}</li>
-                        <li>{acteur[3]}</li>
-                    </ul>
-                """
+                html_list_actors = "<ul>"
+                for a in acteur:
+                    html_list_actors += f"<li>{a}</li>"
+                html_list_actors += "</ul>"
+
 
                 st.markdown(html_list_actors, unsafe_allow_html=True)
 
