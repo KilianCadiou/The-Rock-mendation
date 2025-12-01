@@ -77,12 +77,13 @@ def info_films(id):
     #ACTEURS
 
     html_acteurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
-    html_acteurs2 = html_acteurs.content
-    soup_acteurs = BeautifulSoup(html_acteurs2, 'html.parser')
-    liste_acteurs = []
-    for balise_parent in soup_acteurs.find_all('div', class_='sc-cd7dc4b7-7 vCane'):
-        for element in balise_parent.find_all('a', class_='sc-cd7dc4b7-1 kVdWAO'):
-            liste_acteurs.append(element.get_text().strip())
+    soup_acteurs = BeautifulSoup(html_acteurs.content, 'html.parser')
+
+    # Récupérer les <a> avec data-testid="title-cast-item__actor"
+    liste_acteurs = [
+        a.get_text(strip=True)
+        for a in soup_acteurs.find_all("a", attrs={"data-testid": "title-cast-item__actor"})
+]
 
     if len(liste_acteurs) > 4:
         liste_acteurs = liste_acteurs[:4]
@@ -90,17 +91,25 @@ def info_films(id):
     #PHOTOS ACTEURS
 
     html_acteurs = requests.get(url_finale_title, headers={'User-Agent': navigator})
-    html_acteurs2 = html_acteurs.content
-    soup_acteurs = BeautifulSoup(html_acteurs2, 'html.parser')
+    soup_acteurs = BeautifulSoup(html_acteurs.content, 'html.parser')
+
     dico_photos = {}
     dico_photos_final = {}
 
-    for balise_parent in soup_acteurs.find_all('img', class_='ipc-image'):
-        dico_photos.update({balise_parent['alt'] : balise_parent['src']})
+    # On récupère toutes les images du cast
+    for img in soup_acteurs.find_all("img", class_="ipc-image"):
+        alt = img.get("alt")
+        src = img.get("src")
 
-    for element in dico_photos.keys():
-        if element in liste_acteurs:
-            dico_photos_final.update({element : dico_photos[element]})
+        # On garde seulement les images d'acteurs (les alt contiennent le nom)
+        if alt and src:
+            dico_photos[alt.strip()] = src
+
+    # On filtre pour ne garder que les acteurs recherchés
+    for acteur in liste_acteurs:
+        if acteur in dico_photos:
+            dico_photos_final[acteur] = dico_photos[acteur]
+
 
     #REALISATEUR
 
@@ -116,14 +125,14 @@ def info_films(id):
     #RESUME
 
     html_resume = requests.get(url_finale_title, headers={'User-Agent': navigator})
-    html_resume2 = html_resume.content
-    soup_resume = BeautifulSoup(html_resume2, 'html.parser')
+    soup_resume = BeautifulSoup(html_resume.content, 'html.parser')
 
-    for balise_parent in soup_resume.find_all('span', class_='sc-3ac15c8d-1 gkeSEi'):
-        try:
-            resume = balise_parent.get_text().strip()
-        except:
-            resume = "Unknown"
+    resume = "Unknown"
+
+    balise = soup_resume.find("span", attrs={"data-testid": "plot-xs_to_m"})
+    if balise:
+        resume = balise.get_text(strip=True)
+
 
     return lien_trailer, lien_affiche, liste_acteurs, dico_photos_final, realisateur, resume
 
